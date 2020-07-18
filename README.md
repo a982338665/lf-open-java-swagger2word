@@ -7,11 +7,12 @@
 
 ## 1.引入依赖
 
-    	<dependency>
-            <groupId>com.github.a982338665</groupId>
-            <artifactId>lf-open-java-swagger2word</artifactId>
-            <version>1.0.0-RELEASE</version>
-        </dependency>
+    <dependency>
+        <groupId>com.github.a982338665</groupId>
+        <artifactId>lf-open-java-swagger2word</artifactId>
+        <version>1.0.0-RELEASE</version>
+    </dependency>
+    
 ## 2.使用的依赖包
 ### 2.1 pom.xml
 
