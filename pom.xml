@@ -13,7 +13,29 @@
     <url>https://github.com/a982338665/lf-open-java-swagger2word.git</url>
     <description>swagger转word，pdf文档</description>
 
+    <repositories>
+        <repository>
+            <id>AsposeJavaAPI</id>
+            <name>Aspose Java API</name>
+            <url>https://repository.aspose.com/repo/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
+        <!--        https://docs.aspose.com/display/wordsjava/Installation-->
+<!--        收费的有水印-->
+<!--        <dependency>-->
+<!--            <groupId>com.aspose</groupId>-->
+<!--            <artifactId>aspose-words</artifactId>-->
+<!--            <version>20.6</version>-->
+<!--            <classifier>jdk17</classifier>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.aspose</groupId>-->
+<!--            <artifactId>aspose-words</artifactId>-->
+<!--            <version>20.6</version>-->
+<!--            <classifier>javadoc</classifier>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -51,13 +73,13 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.9.2</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.aspose.words</groupId>-->
-<!--            <artifactId>aspose-words</artifactId>-->
-<!--            <version>14.9.0-jdk16</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${project.basedir}/lib/aspose-words-14.9.0-jdk16.jar</systemPath>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.aspose.words</groupId>-->
+        <!--            <artifactId>aspose-words</artifactId>-->
+        <!--            <version>14.9.0-jdk16</version>-->
+        <!--            <scope>system</scope>-->
+        <!--            <systemPath>${project.basedir}/lib/aspose-words-14.9.0-jdk16.jar</systemPath>-->
+        <!--        </dependency>-->
     </dependencies>
 
     <properties>
@@ -76,29 +98,29 @@
     </licenses>
 
     <build>
-<!--        <resources>-->
-<!--            <resource>-->
-<!--                <directory>${basedir}/lib</directory>-->
-<!--                <targetPath>BOOT-INF/lib/</targetPath>-->
-<!--                <filtering>false</filtering>-->
-<!--                <includes>-->
-<!--                    <include>**/*.jar</include>-->
-<!--                </includes>-->
-<!--            </resource>-->
-<!--            <resource>-->
-<!--                <directory>src/main/resources</directory>-->
-<!--                <targetPath>BOOT-INF/classes/</targetPath>-->
-<!--&lt;!&ndash;                <filtering>true</filtering>&ndash;&gt;-->
-<!--            </resource>-->
-<!--        </resources>-->
+        <!--        <resources>-->
+        <!--            <resource>-->
+        <!--                <directory>${basedir}/lib</directory>-->
+        <!--                <targetPath>BOOT-INF/lib/</targetPath>-->
+        <!--                <filtering>false</filtering>-->
+        <!--                <includes>-->
+        <!--                    <include>**/*.jar</include>-->
+        <!--                </includes>-->
+        <!--            </resource>-->
+        <!--            <resource>-->
+        <!--                <directory>src/main/resources</directory>-->
+        <!--                <targetPath>BOOT-INF/classes/</targetPath>-->
+        <!--&lt;!&ndash;                <filtering>true</filtering>&ndash;&gt;-->
+        <!--            </resource>-->
+        <!--        </resources>-->
 
         <!--打包后的名称-->
         <finalName>${project.artifactId}</finalName>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -107,13 +129,13 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
-<!--                    <compilerArgs>-->
-<!--                        <arg>-verbose</arg>-->
-<!--                        <arg>-Xlint:unchecked</arg>-->
-<!--                        <arg>-Xlint:deprecation</arg>-->
-<!--                        <arg>-extdirs</arg>-->
-<!--                        <arg>${project.basedir}/lib</arg>-->
-<!--                    </compilerArgs>-->
+                    <!--                    <compilerArgs>-->
+                    <!--                        <arg>-verbose</arg>-->
+                    <!--                        <arg>-Xlint:unchecked</arg>-->
+                    <!--                        <arg>-Xlint:deprecation</arg>-->
+                    <!--                        <arg>-extdirs</arg>-->
+                    <!--                        <arg>${project.basedir}/lib</arg>-->
+                    <!--                    </compilerArgs>-->
                 </configuration>
             </plugin>
             <!-- Source -->
