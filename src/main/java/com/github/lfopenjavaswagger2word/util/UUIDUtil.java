@@ -1,0 +1,9 @@
+package com.github.lfopenjavaswagger2word.util;
+
+import java.util.UUID;
+
+public class UUIDUtil {
+	public static String uuid() {
+		return UUID.randomUUID().toString().replace("-", "");
+	}
+}

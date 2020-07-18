@@ -25,6 +25,11 @@ public class SetDocxConf {
     private String contactEmail = "【联系邮件】：";
     private String docxTime = "【创建时间】：";
 
+    /**
+     * 文档的创建时间可以自己定义，不定义的时候取当前时间为准
+     */
+    private String docxTimeValue = null;
+
 
     /**
      * 避免标题重复的 标题分隔符
@@ -39,6 +44,7 @@ public class SetDocxConf {
     private String interUrl = "【接口地址】：";
     private String interMethod = "【请求方式】：";
     private String interType = "【请求类型】：";
+    private String interTypeRes = "【响应类型】：";
     private String interReq = "【请求参数】：";
     private String interRes = "【响应参数】：";
     private String interExample = "【请求示例】：";
@@ -122,6 +128,22 @@ public class SetDocxConf {
      * 请求示例 的其他列颜色
      */
     private String resExampleOtherCellColor = "CCCCCC";
+
+    public String getInterTypeRes() {
+        return interTypeRes;
+    }
+
+    public void setInterTypeRes(String interTypeRes) {
+        this.interTypeRes = interTypeRes;
+    }
+
+    public String getDocxTimeValue() {
+        return docxTimeValue;
+    }
+
+    public void setDocxTimeValue(String docxTimeValue) {
+        this.docxTimeValue = docxTimeValue;
+    }
 
     public String getFilePath() {
         return filePath;

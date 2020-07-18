@@ -36,9 +36,9 @@ public class DocxUtils {
                 "\"updateTime\":\"2020/01/01 00:00:00\",\"version\":0}]'";
         String res1 = "{\"usersArray\":[{\"age\":0,\"createTime\":\"2020/01/01 00:00:00\",\"deleted\":0,\"email\":\"string\",\"id\":0,\"managerId\":0,\"name\":\"string\"," +
                 "\"updateTime\":\"2020/01/01 00:00:00\",\"version\":0}],\"money\":null,\"array\":[{}],\"time\":{},\"testVo\":{},\"age\":0,\"testVos\":[{}]}";
-        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "/_API_API_API_API_API_API_API_API_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1);
-        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "2_EXTERNAL_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1);
-        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "EXTERNAL_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1);
+        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "/_API_API_API_API_API_API_API_API_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1,"*/*");
+        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "2_EXTERNAL_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1,"*/*");
+        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "EXTERNAL_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1,"*/*");
         mapp.put("1级标题测试" + SetDocxConf.getInstance().getSplitTitle() + UUID.randomUUID(), list);
         mapp.put("1级标题测试" + SetDocxConf.getInstance().getSplitTitle() + UUID.randomUUID(), list);
         //头部信息
@@ -112,6 +112,7 @@ public class DocxUtils {
         map.put(GetDocxConf.INTERFACE_TYPE, param[4]);
         map.put(GetDocxConf.INTERFACE_REQ_EXAMPLE, param[5]);
         map.put(GetDocxConf.INTERFACE_RES_EXAMPLE, param[6]);
+        map.put(GetDocxConf.INTERFACE_TYPE_RES, param[7]);
         list.add(map);
     }
 
@@ -129,6 +130,7 @@ public class DocxUtils {
                 String method = map.get(GetDocxConf.INTERFACE_METHOD).toString();
                 String url = map.get(GetDocxConf.INTERFACE_URL).toString();
                 String type = map.get(GetDocxConf.INTERFACE_TYPE).toString();
+                String typeRes = map.get(GetDocxConf.INTERFACE_TYPE_RES).toString();
                 String reqexam = map.get(GetDocxConf.INTERFACE_REQ_EXAMPLE).toString();
                 String resexam = map.get(GetDocxConf.INTERFACE_RES_EXAMPLE).toString();
                 Object o = map.get(GetDocxConf.INTERFACE_REQ);
@@ -141,13 +143,14 @@ public class DocxUtils {
                 String purl = new StringBuilder().append(instance.getInterUrl()).append(url).toString();
                 String pmethod = new StringBuilder().append(instance.getInterMethod()).append(method).toString();
                 String ptype = new StringBuilder().append(instance.getInterType()).append(type).toString();
+                String presType = new StringBuilder().append(instance.getInterTypeRes()).append(typeRes).toString();
                 String preq = instance.getInterReq();
                 String pres = instance.getInterRes();
                 String pexample = instance.getInterExample();
                 //添加二级标题
                 addSecondTitle(doc, title);
                 //添加头内容
-                addInterfaceContent(doc, pdesc, purl, pmethod, ptype, preq);
+                addInterfaceContent(doc, pdesc, purl, pmethod, ptype, preq, presType);
                 //创建请求参数表格
                 addResPraramTable(doc, req, instance);
                 //响应参数
@@ -272,17 +275,18 @@ public class DocxUtils {
     }
 
 
-    private static void addInterfaceContent(XWPFDocument doc, String pdesc, String purl, String pmethod, String ptype, String preq) {
+    private static void addInterfaceContent(XWPFDocument doc, String ...param) {
         int textSize = SetDocxConf.getInstance().getTextFontSize();
         //新建段落
         XWPFParagraph p = doc.createParagraph();
         //布局靠左
         p.setAlignment(ParagraphAlignment.LEFT);
-        XWPFRun r2 = addInsertNewRun(p, textSize, false, pdesc, true, false);
-        XWPFRun r3 = addInsertNewRun(p, textSize, false, purl, true, false);
-        XWPFRun r4 = addInsertNewRun(p, textSize, false, pmethod, true, false);
-        XWPFRun r6 = addInsertNewRun(p, textSize, false, ptype, true, false);
-        XWPFRun r5 = addInsertNewRun(p, textSize, false, preq, false, false);
+        XWPFRun r2 = addInsertNewRun(p, textSize, false, param[0], true, false);
+        XWPFRun r3 = addInsertNewRun(p, textSize, false, param[1], true, false);
+        XWPFRun r4 = addInsertNewRun(p, textSize, false, param[2], true, false);
+        XWPFRun r6 = addInsertNewRun(p, textSize, false, param[3], true, false);
+        XWPFRun r7 = addInsertNewRun(p, textSize, false, param[5], true, false);
+        XWPFRun r5 = addInsertNewRun(p, textSize, false, param[4], false, false);
     }
 
     private static void addInterfaceResponse(XWPFDocument doc, String pres) {

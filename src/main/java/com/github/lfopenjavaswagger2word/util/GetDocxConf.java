@@ -33,6 +33,7 @@ public interface GetDocxConf {
     String INTERFACE_RES_EXAMPLE = "res_example";
     String INTERFACE_RES = "res";
     String INTERFACE_TYPE = "type";
+    String INTERFACE_TYPE_RES = "type_res";
 
 
     /**
