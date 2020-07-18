@@ -12,9 +12,51 @@
             <artifactId>lf-open-java-swagger2word</artifactId>
             <version>1.0.0-RELEASE</version>
         </dependency>
+## 2.使用的依赖包
+### 2.1 pom.xml
 
-## 2 使用
-### 1.2.1 简单使用
+    <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.9.6</version>
+    </dependency>
+    <!--docx处理：表格，图片等，可用于预设模板处理，如准考证打印-->
+    <!-- 也用于表格处理 xls/xlsx-->
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId>
+        <version>3.14</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>ooxml-schemas</artifactId>
+        <version>1.3</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml-schemas</artifactId>
+        <version>3.14</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.xmlbeans</groupId>
+        <artifactId>xmlbeans</artifactId>
+        <version>2.6.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-examples</artifactId>
+        <version>3.14</version>
+    </dependency>
+
+### 2.2 非pom管理的jar包
+> 主要用来将 word文档 转为 pdf文档
+> 位置：/resources/lib
+
+    aspectjweaver-1.9.1.jar
+    aspose-words-14.9.0-jdk16.jar
+
+## 3 使用
+### 3.1 简单使用
     
     1.生成接口文档到指定位置：
         //设置即将生成的文档的基本属性
@@ -38,7 +80,7 @@
             参数：file-读取的本地json文件路径
             返回：XWPFDocument
     
-### 1.2.1 可选择设置属性介绍 SetDocxConf.class
+### 3.2 可选择设置属性介绍 SetDocxConf.class
     
     默认的文件导出路径，项目根路径下 filePath = "InterfaceFile.docx"
     首页介绍的 key （一级标题：固定名称）

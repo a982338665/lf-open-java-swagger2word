@@ -4,8 +4,7 @@ import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.util.*;
 
@@ -36,9 +35,9 @@ public class DocxUtils {
                 "\"updateTime\":\"2020/01/01 00:00:00\",\"version\":0}]'";
         String res1 = "{\"usersArray\":[{\"age\":0,\"createTime\":\"2020/01/01 00:00:00\",\"deleted\":0,\"email\":\"string\",\"id\":0,\"managerId\":0,\"name\":\"string\"," +
                 "\"updateTime\":\"2020/01/01 00:00:00\",\"version\":0}],\"money\":null,\"array\":[{}],\"time\":{},\"testVo\":{},\"age\":0,\"testVos\":[{}]}";
-        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "/_API_API_API_API_API_API_API_API_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1,"*/*");
-        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "2_EXTERNAL_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1,"*/*");
-        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "EXTERNAL_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1,"*/*");
+        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "/_API_API_API_API_API_API_API_API_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1, "*/*");
+        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "2_EXTERNAL_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1, "*/*");
+        addList(list, reqList, reqList, "老师新建接口", "老师新建接口", "EXTERNAL_API/xkexternalimport/addTeacher", "Get", "application/json", req1, res1, "*/*");
         mapp.put("1级标题测试" + SetDocxConf.getInstance().getSplitTitle() + UUID.randomUUID(), list);
         mapp.put("1级标题测试" + SetDocxConf.getInstance().getSplitTitle() + UUID.randomUUID(), list);
         //头部信息
@@ -55,6 +54,14 @@ public class DocxUtils {
 
     }
 
+    /**
+     * 使用方法 getXWPFDocument 替代
+     *
+     * @param instance
+     * @param mapp
+     * @param map
+     */
+    @Deprecated
     public static void generateDoc(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map) {
         try (
                 XWPFDocument doc = new XWPFDocument();
@@ -76,10 +83,14 @@ public class DocxUtils {
             e.printStackTrace();
         }
     }
-    public static XWPFDocument getXWPFDocument(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map) {
+
+    public static void getXWPFDocument(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map, OutputStream out) {
         try (
                 XWPFDocument doc = new XWPFDocument();
         ) {
+            if (out == null) {
+                out = new FileOutputStream(instance.getFilePath().concat(".docx"));
+            }
             //添加预置标题
             addStyle(doc);
             //生成文档标题
@@ -88,11 +99,46 @@ public class DocxUtils {
             addIndexDocx(instance, map, doc);
             //生成文档内容
             generateDocx(doc, mapp);
-            return doc;
+            doc.write(out);
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return null;
+    }
+
+    public static void getXWPFDocumentPDF(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map, OutputStream out, String watermarkText) {
+        try (
+                XWPFDocument doc = new XWPFDocument();
+        ) {
+            if (out == null) {
+                out = new FileOutputStream(instance.getFilePath().concat(".pdf"));
+            }
+            //添加预置标题
+            addStyle(doc);
+            //生成文档标题
+            addDocxTitle(map, doc);
+            //首页介绍
+            addIndexDocx(instance, map, doc);
+            //生成文档内容
+            generateDocx(doc, mapp);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();//二进制OutputStream
+            doc.write(baos);//文档写入流
+            ByteArrayInputStream in = new ByteArrayInputStream(baos.toByteArray());
+            WordToPDFUtils.doc2pdfByStream(in, out, watermarkText);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void addIndexDocx(SetDocxConf instance, Map<String, String> map, XWPFDocument doc) {
@@ -293,7 +339,7 @@ public class DocxUtils {
     }
 
 
-    private static void addInterfaceContent(XWPFDocument doc, String ...param) {
+    private static void addInterfaceContent(XWPFDocument doc, String... param) {
         int textSize = SetDocxConf.getInstance().getTextFontSize();
         //新建段落
         XWPFParagraph p = doc.createParagraph();

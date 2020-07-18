@@ -11,7 +11,8 @@ public class SetDocxConf {
     /**
      * 默认的文件导出路径
      */
-    private String filePath = "InterfaceFile.docx";
+    private String filePath = "InterfaceFile";
+
 
     /**
      * 首页介绍的 key （一级标题：固定名称）

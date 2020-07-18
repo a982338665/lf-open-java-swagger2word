@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.lfopenjavaswagger2word.model.ModelAttr;
 import com.github.lfopenjavaswagger2word.model.Request;
 import com.github.lfopenjavaswagger2word.model.Response;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 
 /**
@@ -19,12 +19,14 @@ import java.util.*;
 public class GenerateDocxUtils {
 
     /**
-     * 通过读取本地JSON 生成本地接口文档
-     *
-     * @param file
+     * 通过读取本地JSON 生成本地接口文档pdf
+     * outputStream == null的时候默认在根目录下生成pdf文件
+     * @param file json文件
+     * @param outputStream
+     * @param watermarkText 水印内容，为null时不设置
      * @throws IOException
      */
-    public static boolean generateFile(String file) {
+    public static boolean generateFilePDF(String file, OutputStream outputStream,String watermarkText) {
         try {
             //1.读取json
             String reader = TextUtil.reader(file);
@@ -40,7 +42,7 @@ public class GenerateDocxUtils {
             //解析文档介绍信息
             Map<String, String> mapIndex = parseWordIndex(map);
             generateDocContent(mappAll, map, host);
-            DocxUtils.generateDoc(instance, mappAll, mapIndex);
+            DocxUtils.getXWPFDocumentPDF(instance, mappAll, mapIndex, outputStream,watermarkText);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,12 +52,15 @@ public class GenerateDocxUtils {
 
     /**
      * 生成本地接口文档
+     * outputStream == null的时候默认在根目录下生成pdf文件
      * @param reader swagger导出的json文件内容
+     * @param outputStream
+     * @param watermarkText 水印内容，为null时不设置
      * @throws IOException
      */
-    public static boolean generateFileByJSON( String reader) {
+    public static boolean generateFileByJSONPDF(String reader, OutputStream outputStream,String watermarkText) {
         try {
-            if(TextUtil.isBlank(reader)){
+            if (TextUtil.isBlank(reader)) {
                 throw new Exception("jsonstr cannot null！");
             }
             //2.解析赋值
@@ -70,7 +75,7 @@ public class GenerateDocxUtils {
             //解析文档介绍信息
             Map<String, String> mapIndex = parseWordIndex(map);
             generateDocContent(mappAll, map, host);
-            DocxUtils.generateDoc(instance, mappAll, mapIndex);
+            DocxUtils.getXWPFDocumentPDF(instance, mappAll, mapIndex, outputStream,watermarkText);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,15 +85,15 @@ public class GenerateDocxUtils {
 
     /**
      * 返回文档对象 XWPFDocument doc
-     * 可通过以下方式写出文档：或者通过response返回前端
-     * FileOutputStream out = new FileOutputStream(instance.getFilePath());
-     * doc.write(out);
+     * outputStream == null的时候默认在根目录下生成pdf文件
      * @param reader swagger导出的json文件内容
+     * @param out    输出流
+     * @param watermarkText 水印内容，为null时不设置
      * @throws IOException
      */
-    public static XWPFDocument generateXWPFDocumentByJSON(String reader) {
+    public static void generateXWPFDocumentByJSONPDF(String reader, OutputStream out,String watermarkText) {
         try {
-            if(TextUtil.isBlank(reader)){
+            if (TextUtil.isBlank(reader)) {
                 throw new Exception("jsonstr cannot null！");
             }
             //2.解析赋值
@@ -103,23 +108,22 @@ public class GenerateDocxUtils {
             //解析文档介绍信息
             Map<String, String> mapIndex = parseWordIndex(map);
             generateDocContent(mappAll, map, host);
-            XWPFDocument xwpfDocument = DocxUtils.getXWPFDocument(instance, mappAll, mapIndex);
-            return xwpfDocument;
+            DocxUtils.getXWPFDocumentPDF(instance, mappAll, mapIndex, out,watermarkText);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
     }
 
     /**
-     * 通过读取本地JSON 返回文档对象 XWPFDocument doc
+     * 通过读取本地JSON 返回文档对象 XWPFDocument pdf
      * 可通过以下方式写出文档：或者通过response返回前端
-     * FileOutputStream out = new FileOutputStream(instance.getFilePath());
-     * doc.write(out);
+     * FioutputStream == null的时候默认在根目录下生成pdf文件
      * @param file
+     * @param out
+     * @param watermarkText 水印内容，为null时不设置
      * @throws IOException
      */
-    public static XWPFDocument generateXWPFDocument(String file){
+    public static void generateXWPFDocumentPDF(String file, OutputStream out,String watermarkText) {
         try {
             //1.读取json
             String reader = TextUtil.reader(file);
@@ -135,11 +139,130 @@ public class GenerateDocxUtils {
             //解析文档介绍信息
             Map<String, String> mapIndex = parseWordIndex(map);
             generateDocContent(mappAll, map, host);
-            XWPFDocument xwpfDocument = DocxUtils.getXWPFDocument(instance, mappAll, mapIndex);
-            return xwpfDocument;
+            DocxUtils.getXWPFDocumentPDF(instance, mappAll, mapIndex, out,watermarkText);
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+        }
+    }
+    /**
+     * 通过读取本地JSON 生成本地接口文档
+     * outputStream == null的时候默认在根目录下生成docx文件
+     * @param file
+     * @param outputStream
+     * @throws IOException
+     */
+    public static boolean generateFile(String file, OutputStream outputStream) {
+        try {
+            //1.读取json
+            String reader = TextUtil.reader(file);
+            //2.解析赋值
+            ObjectMapper om = new ObjectMapper();
+            //3.导出
+            SetDocxConf instance = SetDocxConf.getInstance();
+            //所有的一级标题集合
+            Map<String, List<Map<String, Object>>> mappAll = new HashMap<>();
+            // 转map
+            Map<String, Object> map = om.readValue(reader, HashMap.class);
+            String host = map.get("host").toString();
+            //解析文档介绍信息
+            Map<String, String> mapIndex = parseWordIndex(map);
+            generateDocContent(mappAll, map, host);
+            DocxUtils.getXWPFDocument(instance, mappAll, mapIndex, outputStream);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 生成本地接口文档
+     * outputStream == null的时候默认在根目录下生成docx文件
+     * @param reader swagger导出的json文件内容
+     * @throws IOException
+     */
+    public static boolean generateFileByJSON(String reader, OutputStream outputStream) {
+        try {
+            if (TextUtil.isBlank(reader)) {
+                throw new Exception("jsonstr cannot null！");
+            }
+            //2.解析赋值
+            ObjectMapper om = new ObjectMapper();
+            //3.导出
+            SetDocxConf instance = SetDocxConf.getInstance();
+            //所有的一级标题集合
+            Map<String, List<Map<String, Object>>> mappAll = new HashMap<>();
+            // 转map
+            Map<String, Object> map = om.readValue(reader, HashMap.class);
+            String host = map.get("host").toString();
+            //解析文档介绍信息
+            Map<String, String> mapIndex = parseWordIndex(map);
+            generateDocContent(mappAll, map, host);
+            DocxUtils.getXWPFDocument(instance, mappAll, mapIndex, outputStream);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 返回文档对象 XWPFDocument doc
+     * outputStream == null的时候默认在根目录下生成docx文件
+     * @param reader swagger导出的json文件内容
+     * @param out    输出流
+     * @throws IOException
+     */
+    public static void generateXWPFDocumentByJSON(String reader, OutputStream out) {
+        try {
+            if (TextUtil.isBlank(reader)) {
+                throw new Exception("jsonstr cannot null！");
+            }
+            //2.解析赋值
+            ObjectMapper om = new ObjectMapper();
+            //3.导出
+            SetDocxConf instance = SetDocxConf.getInstance();
+            //所有的一级标题集合
+            Map<String, List<Map<String, Object>>> mappAll = new HashMap<>();
+            // 转map
+            Map<String, Object> map = om.readValue(reader, HashMap.class);
+            String host = map.get("host").toString();
+            //解析文档介绍信息
+            Map<String, String> mapIndex = parseWordIndex(map);
+            generateDocContent(mappAll, map, host);
+            DocxUtils.getXWPFDocument(instance, mappAll, mapIndex, out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 通过读取本地JSON 返回文档对象 XWPFDocument doc
+     * 可通过以下方式写出文档：或者通过response返回前端
+     * FioutputStream == null的时候默认在根目录下生成docx文件
+     * @param file
+     * @param out
+     * @throws IOException
+     */
+    public static void generateXWPFDocument(String file, OutputStream out) {
+        try {
+            //1.读取json
+            String reader = TextUtil.reader(file);
+            //2.解析赋值
+            ObjectMapper om = new ObjectMapper();
+            //3.导出
+            SetDocxConf instance = SetDocxConf.getInstance();
+            //所有的一级标题集合
+            Map<String, List<Map<String, Object>>> mappAll = new HashMap<>();
+            // 转map
+            Map<String, Object> map = om.readValue(reader, HashMap.class);
+            String host = map.get("host").toString();
+            //解析文档介绍信息
+            Map<String, String> mapIndex = parseWordIndex(map);
+            generateDocContent(mappAll, map, host);
+            DocxUtils.getXWPFDocument(instance, mappAll, mapIndex, out);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
