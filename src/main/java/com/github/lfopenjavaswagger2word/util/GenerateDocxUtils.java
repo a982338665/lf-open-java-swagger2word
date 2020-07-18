@@ -1,12 +1,12 @@
-package com.github.lfopenjavaswagger2word.test;
+package com.github.lfopenjavaswagger2word.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.lfopenjavaswagger2word.model.ModelAttr;
 import com.github.lfopenjavaswagger2word.model.Request;
 import com.github.lfopenjavaswagger2word.model.Response;
-import com.github.lfopenjavaswagger2word.util.*;
 import com.sun.deploy.util.StringUtils;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.IOException;
 import java.util.*;
@@ -17,40 +17,138 @@ import java.util.*;
  * @createTime : 2020/7/16 17:04
  * @Description :
  */
-public class Test {
+public class GenerateDocxUtils {
 
-    public static void main(String[] args) throws IOException {
-        //1.读取json
-        String reader = TextUtil.reader("./file.json");
-//        System.err.println(reader);
-        //2.解析赋值
-        ObjectMapper om = new ObjectMapper();
-//        JsonNode node = om.readTree(reader);
-//        JsonNode swagger = node.get("swagger");
-//        JsonNode info = node.get("info");
-//        JsonNode host = node.get("host");
-//        JsonNode basePath = node.get("basePath");
-//        JsonNode tags = node.get("tags");
-//        JsonNode paths = node.get("paths");
-//        JsonNode definitions = node.get("definitions");
-//        //
+    /**
+     * 通过读取本地JSON 生成本地接口文档
+     *
+     * @param file
+     * @throws IOException
+     */
+    public static boolean generateFile(String file) {
+        try {
+            //1.读取json
+            String reader = TextUtil.reader(file);
+            //2.解析赋值
+            ObjectMapper om = new ObjectMapper();
+            //3.导出
+            SetDocxConf instance = SetDocxConf.getInstance();
+            //所有的一级标题集合
+            Map<String, List<Map<String, Object>>> mappAll = new HashMap<>();
+            // 转map
+            Map<String, Object> map = om.readValue(reader, HashMap.class);
+            String host = map.get("host").toString();
+            //解析文档介绍信息
+            Map<String, String> mapIndex = parseWordIndex(map);
+            generateDocContent(mappAll, map, host);
+            DocxUtils.generateDoc(instance, mappAll, mapIndex);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-        // 转map
-        Map<String, Object> map = om.readValue(reader, HashMap.class);
-        String host = map.get("host").toString();
+    /**
+     * 生成本地接口文档
+     * @param reader swagger导出的json文件内容
+     * @throws IOException
+     */
+    public static boolean generateFileByJSON( String reader) {
+        try {
+            if(TextUtil.isBlank(reader)){
+                throw new Exception("jsonstr cannot null！");
+            }
+            //2.解析赋值
+            ObjectMapper om = new ObjectMapper();
+            //3.导出
+            SetDocxConf instance = SetDocxConf.getInstance();
+            //所有的一级标题集合
+            Map<String, List<Map<String, Object>>> mappAll = new HashMap<>();
+            // 转map
+            Map<String, Object> map = om.readValue(reader, HashMap.class);
+            String host = map.get("host").toString();
+            //解析文档介绍信息
+            Map<String, String> mapIndex = parseWordIndex(map);
+            generateDocContent(mappAll, map, host);
+            DocxUtils.generateDoc(instance, mappAll, mapIndex);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-        //解析文档介绍信息
-        Map<String, String> mapIndex = parseWordIndex(map);
+    /**
+     * 返回文档对象 XWPFDocument doc
+     * 可通过以下方式写出文档：或者通过response返回前端
+     * FileOutputStream out = new FileOutputStream(instance.getFilePath());
+     * doc.write(out);
+     * @param reader swagger导出的json文件内容
+     * @throws IOException
+     */
+    public static XWPFDocument generateXWPFDocumentByJSON(String reader) {
+        try {
+            if(TextUtil.isBlank(reader)){
+                throw new Exception("jsonstr cannot null！");
+            }
+            //2.解析赋值
+            ObjectMapper om = new ObjectMapper();
+            //3.导出
+            SetDocxConf instance = SetDocxConf.getInstance();
+            //所有的一级标题集合
+            Map<String, List<Map<String, Object>>> mappAll = new HashMap<>();
+            // 转map
+            Map<String, Object> map = om.readValue(reader, HashMap.class);
+            String host = map.get("host").toString();
+            //解析文档介绍信息
+            Map<String, String> mapIndex = parseWordIndex(map);
+            generateDocContent(mappAll, map, host);
+            XWPFDocument xwpfDocument = DocxUtils.getXWPFDocument(instance, mappAll, mapIndex);
+            return xwpfDocument;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    /**
+     * 通过读取本地JSON 返回文档对象 XWPFDocument doc
+     * 可通过以下方式写出文档：或者通过response返回前端
+     * FileOutputStream out = new FileOutputStream(instance.getFilePath());
+     * doc.write(out);
+     * @param file
+     * @throws IOException
+     */
+    public static XWPFDocument generateXWPFDocument(String file){
+        try {
+            //1.读取json
+            String reader = TextUtil.reader(file);
+            //2.解析赋值
+            ObjectMapper om = new ObjectMapper();
+            //3.导出
+            SetDocxConf instance = SetDocxConf.getInstance();
+            //所有的一级标题集合
+            Map<String, List<Map<String, Object>>> mappAll = new HashMap<>();
+            // 转map
+            Map<String, Object> map = om.readValue(reader, HashMap.class);
+            String host = map.get("host").toString();
+            //解析文档介绍信息
+            Map<String, String> mapIndex = parseWordIndex(map);
+            generateDocContent(mappAll, map, host);
+            XWPFDocument xwpfDocument = DocxUtils.getXWPFDocument(instance, mappAll, mapIndex);
+            return xwpfDocument;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static void generateDocContent(Map<String, List<Map<String, Object>>> mappAll, Map<String, Object> map, String host) throws IOException {
         //解析model
         Map<String, ModelAttr> definitinMap = parseDefinitions(map);
-
-        //所有的一级标题集合
-        Map<String, List<Map<String, Object>>> mappAll = new HashMap<>();
-
         //单个一级标题下的所有内容，每个一级标题下都有一个List，装的是二级及以下的接口内容
 //        List<Map<String, Object>> list = new ArrayList<>();
-
         //解析paths
         Map<String, Map<String, Object>> paths = (Map<String, Map<String, Object>>) map.get("paths");
         if (paths != null) {
@@ -185,12 +283,12 @@ public class Test {
                 Map<String, Object> obj = (Map<String, Object>) responses.get("200");
                 if (obj != null && obj.get("schema") != null) {
                     ModelAttr attr = processResponseModelAttrs(obj, definitinMap);
-                    System.err.println(om.writeValueAsString(attr));
+//                    System.err.println(om.writeValueAsString(attr));
                     List<ModelAttr> properties = attr.getProperties();
                     //反参为空时，作为基础数据类型存入
                     if (properties == null || properties.size() == 0) {
                         Map<String, Object> mresMap = new HashMap<>();
-                        mresMap.put(GetDocxConf.REQ_DESC, attr.getDescription() == null?"":attr.getDescription());
+                        mresMap.put(GetDocxConf.REQ_DESC, attr.getDescription() == null ? "" : attr.getDescription());
                         mresMap.put(GetDocxConf.REQ_DATA_TYPE, attr.getType());
                         mresMap.put(GetDocxConf.REQ_NAME, "[无名称]");
                         resList.add(mresMap);
@@ -206,10 +304,6 @@ public class Test {
                 DocxUtils.addList(list1, reqList, resList, tag, description, host.concat(url), requestType, requestForm, reqExam, resExam, responseForm);
             }
         }
-
-        //3.导出
-        SetDocxConf instance = SetDocxConf.getInstance();
-        DocxUtils.generateDoc(instance, mappAll, mapIndex);
     }
 
     /**
@@ -452,7 +546,7 @@ public class Test {
                 mreqChild.put(GetDocxConf.REQ_PARAM_TYPE, String.valueOf(in));
                 mreqChild.put(GetDocxConf.REQ_DATA_TYPE, attr.getType());
                 mreqChild.put(GetDocxConf.REQ_ISFILL, attr.getRequire());
-                mreqChild.put(GetDocxConf.REQ_DESC, attr.getDescription() == null?"":attr.getDescription());
+                mreqChild.put(GetDocxConf.REQ_DESC, attr.getDescription() == null ? "" : attr.getDescription());
                 reqList.add(mreqChild);
                 List<ModelAttr> properties1 = attr.getProperties();
                 addReqParam(reqList, secondSuffix, in, properties1);
@@ -473,7 +567,7 @@ public class Test {
                 }
                 mreqChild.put(GetDocxConf.REQ_NAME, TextUtil.concat(secondSuffix, attr.getName()));
                 mreqChild.put(GetDocxConf.REQ_DATA_TYPE, attr.getType());
-                mreqChild.put(GetDocxConf.REQ_DESC,attr.getDescription() == null?"":attr.getDescription());
+                mreqChild.put(GetDocxConf.REQ_DESC, attr.getDescription() == null ? "" : attr.getDescription());
                 resList.add(mreqChild);
                 List<ModelAttr> properties1 = attr.getProperties();
                 addResParam(resList, secondSuffix, properties1);
@@ -500,7 +594,7 @@ public class Test {
         mapIndex.put(GetDocxConf.INDEX_URL, url1);
         mapIndex.put(GetDocxConf.INDEX_EMAIL, email);
         mapIndex.put(GetDocxConf.INDEX_TIME, SetDocxConf.getInstance().getDocxTimeValue() == null ? DateUtils.now(null) : SetDocxConf.getInstance().getDocxTimeValue());
-        mapIndex.keySet().forEach(key -> System.out.println("map.get(" + key + ") = " + mapIndex.get(key)));
+//        mapIndex.keySet().forEach(key -> System.out.println("map.get(" + key + ") = " + mapIndex.get(key)));
         return mapIndex;
     }
 

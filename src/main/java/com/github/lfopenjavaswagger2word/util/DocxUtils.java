@@ -76,6 +76,24 @@ public class DocxUtils {
             e.printStackTrace();
         }
     }
+    public static XWPFDocument getXWPFDocument(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map) {
+        try (
+                XWPFDocument doc = new XWPFDocument();
+        ) {
+            //添加预置标题
+            addStyle(doc);
+            //生成文档标题
+            addDocxTitle(map, doc);
+            //首页介绍
+            addIndexDocx(instance, map, doc);
+            //生成文档内容
+            generateDocx(doc, mapp);
+            return doc;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     private static void addIndexDocx(SetDocxConf instance, Map<String, String> map, XWPFDocument doc) {
         int titleSize = SetDocxConf.getInstance().getTextFirstTitleFontSize();
