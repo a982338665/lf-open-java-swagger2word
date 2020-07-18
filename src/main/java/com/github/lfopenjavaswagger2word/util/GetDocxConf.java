@@ -2,9 +2,9 @@ package com.github.lfopenjavaswagger2word.util;
 
 /**
  * @author : Mr huangye
- * @URL : CSDN 皇夜_
- * @createTime : 2020/7/17 12:04
- * @Description : 常量集合
+ * URL : CSDN 皇夜_
+ * createTime : 2020/7/17 12:04
+ * Description : 常量集合
  */
 public interface GetDocxConf {
 

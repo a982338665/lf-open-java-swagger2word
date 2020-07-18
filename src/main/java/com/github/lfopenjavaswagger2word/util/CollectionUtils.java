@@ -4,9 +4,9 @@ import java.util.Collection;
 
 /**
  * @author : Mr huangye
- * @URL : CSDN 皇夜_
- * @createTime : 2020/7/18 15:16
- * @Description :
+ * URL : CSDN 皇夜_
+ * createTime : 2020/7/18 15:16
+ * Description :
  */
 public class CollectionUtils {
 
