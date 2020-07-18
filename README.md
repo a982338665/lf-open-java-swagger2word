@@ -52,7 +52,6 @@
 > 主要用来将 word文档 转为 pdf文档
 > 位置：/resources/lib
 
-    aspectjweaver-1.9.1.jar
     aspose-words-14.9.0-jdk16.jar
 
 ## 3 使用
@@ -144,12 +143,12 @@
         resExampleOtherCellColor = "CCCCCC";
 
 ## 4.分支介绍：
-> pdf-aspose 分支是 包含有 aspose方式，将wprd文档完美转换为pdf的项目
-> 由于该包是付费版，为去除水印，使用破解版jar包
-> 使用方式 - 参见类：GenerateDocxUtils中的方法介绍
+> pdf-aspose 分支是 包含有 aspose方式，将wprd文档完美转换为pdf的项目  
+> 由于该包是付费版，为去除水印，使用破解版jar包  
+> 使用方式 - 参见类：GenerateDocxUtils中的方法介绍  
 
     
 ## 5.tag介绍：
-> V1.0.0: 仅支持Swagger转word文档，添加依赖直接使用
-> V2.0.0：添加支持Swagger转PDF文档，包含word文档转PDF，但是不能直接引用中央仓库依赖使用，需要下载该项目，mvn install使用
-> V3.0.0：持续...寻找其他方式进行pdf文档生成或转换
+> V1.0.0: 仅支持Swagger转word文档，添加依赖直接使用  
+> V2.0.0：添加支持Swagger转PDF文档，包含word文档转PDF，但是不能直接引用中央仓库依赖使用，需要下载该项目，mvn install使用  
+> V3.0.0：持续...寻找其他方式进行pdf文档生成或转换  
