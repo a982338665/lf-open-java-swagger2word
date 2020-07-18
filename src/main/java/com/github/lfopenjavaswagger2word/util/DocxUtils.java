@@ -55,7 +55,7 @@ public class DocxUtils {
 
     }
 
-    private static void generateDoc(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map) {
+    public static void generateDoc(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map) {
         try (
                 XWPFDocument doc = new XWPFDocument();
                 //组装文件名称
@@ -270,7 +270,7 @@ public class DocxUtils {
         }
 
         ctPr.addNewVAlign().setVal(STVerticalJc.CENTER);
-        cttc.getPList().get(0).addNewPPr().addNewJc().setVal(STJc.CENTER);
+        cttc.getPList().get(0).addNewPPr().addNewJc().setVal(STJc.LEFT);
         cell.setText(text);
     }
 

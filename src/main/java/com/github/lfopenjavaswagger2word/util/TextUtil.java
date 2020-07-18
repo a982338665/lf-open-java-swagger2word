@@ -4,6 +4,7 @@ import java.io.*;
 
 public class TextUtil {
 
+    public static final String EMPTY = "";
 
     public static void write(String file, String content) {
         File wFile = new File(file);
@@ -25,12 +26,12 @@ public class TextUtil {
 
     public static String reader(String file) {
         File myFile = new File(file);
-        try(
+        try (
                 //创建FileReader
                 FileReader fileReader = new FileReader(myFile);
                 //使用BufferedReader加速
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
-                ) {
+        ) {
             //打开文件
             //逐行读取文本
             String lineString = null;
@@ -47,5 +48,66 @@ public class TextUtil {
         return null;
 
     }
+
+
+    /**
+     * 在指定字符串前面添加指定个数的空格
+     *
+     * @param str
+     * @param x
+     * @return
+     */
+    public static String addBlank(String str, int x) {
+        StringBuilder stringBuilder = new StringBuilder("");
+        for (int i = 0; i < x; i++) {
+            stringBuilder.append(" ");
+        }
+        stringBuilder.append(str);
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 连接字符串
+     * @param params
+     * @return
+     */
+    public static String concat(String... params) {
+        StringBuilder stringBuilder= new StringBuilder();
+        for (int i = 0; i < params.length; i++) {
+            stringBuilder.append(params[i]);
+        }
+        return stringBuilder.toString();
+    }
+
+
+    public static String defaultIfBlank(String type,String defaultVal){
+        if(type == null || type.equals("")){
+            return defaultVal;
+        }else{
+            return type;
+        }
+    }
+
+    public static boolean isBlank(String ref){
+        return ref == null || ref.trim().equals("");
+    }
+
+    public static String substringBeforeLast(String str, String separator) {
+        if (!isEmpty(str) && !isEmpty(separator)) {
+            int pos = str.lastIndexOf(separator);
+            return pos == -1 ? str : str.substring(0, pos);
+        } else {
+            return str;
+        }
+    }
+    public static boolean isEmpty(CharSequence cs) {
+        return cs == null || cs.length() == 0;
+    }
+
+    public static boolean isNotEmpty(CharSequence cs) {
+        return !isEmpty(cs);
+    }
+
+
 
 }
