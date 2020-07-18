@@ -143,7 +143,10 @@
         请求示例 的其他列颜色
         resExampleOtherCellColor = "CCCCCC";
 
-
+## 4.分支介绍：
+> pdf-aspose 分支是 包含有 aspose方式，将wprd文档完美转换为pdf的项目
+> 由于该包是付费版，为去除水印，使用破解版jar包
+> 使用方式 - 参见类：GenerateDocxUtils中的方法介绍
 
     
-    
+
