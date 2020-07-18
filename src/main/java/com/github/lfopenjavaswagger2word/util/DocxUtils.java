@@ -129,7 +129,7 @@ public class DocxUtils {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();//二进制OutputStream
             doc.write(baos);//文档写入流
             ByteArrayInputStream in = new ByteArrayInputStream(baos.toByteArray());
-            WordToPDFUtils.doc2pdfByStream(in, out, watermarkText);
+//            WordToPDFUtils.doc2pdfByStream(in, out, watermarkText);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

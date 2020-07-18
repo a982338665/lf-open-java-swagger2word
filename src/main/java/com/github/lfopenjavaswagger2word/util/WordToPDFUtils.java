@@ -1,11 +1,5 @@
 package com.github.lfopenjavaswagger2word.util;
 
-import com.aspose.words.*;
-import com.aspose.words.Shape;
-
-import java.awt.*;
-import java.io.*;
-
 /**
  * @author : Mr huangye
  * @URL : CSDN 皇夜_
@@ -14,16 +8,16 @@ import java.io.*;
  */
 public class WordToPDFUtils {
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         doc2pdf("InterfaceFile.docx", "InterfaceFile.pdf", "皇夜_");
     }
 
-    /**
+    *//**
      * word 转 pdf
      * @param inPath    word文档路径
      * @param outPath   pdf输出路径
      * @param watermarkText 水印内容，为空则不添加水印
-     */
+     *//*
     public static void doc2pdf(String inPath, String outPath, String watermarkText) {
         FileOutputStream os = null;
         try {
@@ -46,12 +40,12 @@ public class WordToPDFUtils {
             }
         }
     }
-    /**
+    *//**
      * word 转 pdf
      * @param inPath    word输入流
      * @param os   pdf输出流
      * @param watermarkText 水印内容，为空则不添加水印
-     */
+     *//*
     public static void doc2pdfByStream(InputStream inPath, OutputStream os, String watermarkText) {
         try {
             Document doc = new Document(inPath); // Address是将要被转化的word文档
@@ -72,7 +66,7 @@ public class WordToPDFUtils {
         }
     }
 
-    /**
+    *//**
      * @param doc
      * @param watermarkText
      * @throws Exception
@@ -80,7 +74,7 @@ public class WordToPDFUtils {
      * @Title: insertWatermarkText
      * @Description: PDF生成水印
      * @author mzl
-     */
+     *//*
     private static void insertWatermarkText(Document doc, String watermarkText) throws Exception {
         Shape watermark = new Shape(doc, ShapeType.TEXT_PLAIN_TEXT);
         //水印内容
@@ -117,7 +111,7 @@ public class WordToPDFUtils {
             sect.getHeadersFooters().add(header);
         }
         header.appendChild(watermarkPara.deepClone(true));
-    }
+    }*/
 
 
 }
