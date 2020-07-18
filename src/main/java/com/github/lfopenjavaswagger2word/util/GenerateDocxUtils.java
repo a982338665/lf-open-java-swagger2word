@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.lfopenjavaswagger2word.model.ModelAttr;
 import com.github.lfopenjavaswagger2word.model.Request;
 import com.github.lfopenjavaswagger2word.model.Response;
-import com.sun.deploy.util.StringUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.IOException;
