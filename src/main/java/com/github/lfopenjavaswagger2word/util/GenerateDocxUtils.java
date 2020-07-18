@@ -163,7 +163,7 @@ public class GenerateDocxUtils {
                 // 1.请求路径
                 String url = path.getKey();
                 // 2.请求方式，类似为 get,post,delete,put 这样
-                String requestType = StringUtils.join(path.getValue().keySet(), ",");
+                String requestType = TextUtil.join(path.getValue().keySet(), ",");
                 // 3. 不管有几种请求方式，都只解析第一种
                 Map.Entry<String, Object> firstRequest = it2.next();
                 Map<String, Object> content = (Map<String, Object>) firstRequest.getValue();
@@ -175,13 +175,13 @@ public class GenerateDocxUtils {
                 String requestForm = "";
                 List<String> consumes = (List) content.get("consumes");
                 if (consumes != null && consumes.size() > 0) {
-                    requestForm = StringUtils.join(consumes, ",");
+                    requestForm = TextUtil.join(consumes, ",");
                 }
                 // 8.返回参数格式，类似于 application/json
                 String responseForm = "";
                 List<String> produces = (List) content.get("produces");
                 if (produces != null && produces.size() > 0) {
-                    responseForm = StringUtils.join(produces, ",");
+                    responseForm = TextUtil.join(produces, ",");
                 }
                 // 4. 大标题（类说明）
                 String title = String.valueOf(((List) content.get("tags")).get(0));
