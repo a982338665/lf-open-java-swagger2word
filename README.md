@@ -1,8 +1,8 @@
 # lf-open-java-swagger2word 简介
->swagger2转word文档，pdf文档等
-> 1.JSON解析部分部分借鉴 https://github.com/JMCuixy/swagger2word.git
-> 2.pdf文档生成暂未开发
-> 3.基础属性可配置
+>swagger2转word文档，pdf文档等  
+> 1.JSON解析部分部分借鉴 https://github.com/JMCuixy/swagger2word.git  
+> 2.pdf文档生成暂未开发  
+> 3.基础属性可配置  
 
 
 ## 1.引入依赖
