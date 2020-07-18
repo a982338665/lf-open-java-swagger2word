@@ -149,4 +149,7 @@
 > 使用方式 - 参见类：GenerateDocxUtils中的方法介绍
 
     
-
+## 5.tag介绍：
+> V1.0.0: 仅支持Swagger转word文档，添加依赖直接使用
+> V2.0.0：添加支持Swagger转PDF文档，包含word文档转PDF，但是不能直接引用中央仓库依赖使用，需要下载该项目，mvn install使用
+> V3.0.0：持续...寻找其他方式进行pdf文档生成或转换
