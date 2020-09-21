@@ -29,6 +29,7 @@ public class DocxUtils {
         reqList.add(mreqMap);
         reqList.add(mreqMap);
         SetDocxConf instance = SetDocxConf.getInstance();
+        instance.setFilePath("hhh.docx");
         Map<String, List<Map<String, Object>>> mapp = new HashMap<>();
         List<Map<String, Object>> list = new ArrayList<>();
         String req1 = "--header 'Authorization:string' -d '[{\"age\":0,\"createTime\":\"2020/01/01 00:00:00\",\"deleted\":0,\"email\":\"string\",\"id\":0,\"managerId\":0,\"name\":\"string\"," +
