@@ -153,3 +153,33 @@
 > V1.0.0: 仅支持Swagger转word文档，添加依赖直接使用  
 > V2.0.0：添加支持Swagger转PDF文档，包含word文档转PDF，但是不能直接引用中央仓库依赖使用，需要下载该项目，mvn install使用  
 > V3.0.0：持续...寻找其他方式进行pdf文档生成或转换  
+
+## 6.响应到浏览器
+    
+    //1.设置文件ContentType类型，这样设置，会自动判断下载文件类型   
+    response.setContentType("multipart/form-data");   
+    //2.设置文件头：最后一个参数是设置下载文件名(假如我们叫a.pdf)   
+    response.setHeader("Content-Disposition", "attachment;fileName="+"a.pdf");   
+    //通过文件路径获得File对象(假如此路径中有一个download.pdf文件)   
+            File file = new File(path + "download/" + "download.pdf");   
+      
+            try {   
+                FileInputStream inputStream = new FileInputStream(file);   
+      
+                //3.通过response获取ServletOutputStream对象(out)   
+                out = response.getOutputStream();   
+      
+                int b = 0;   
+                byte[] buffer = new byte[512];   
+                while (b != -1){   
+                    b = inputStream.read(buffer);   
+                    //4.写到输出流(out)中   
+                    out.write(buffer,0,b);   
+                }   
+                inputStream.close();   
+                out.close();   
+                out.flush();   
+      
+            } catch (IOException e) {   
+                e.printStackTrace();   
+            }  
