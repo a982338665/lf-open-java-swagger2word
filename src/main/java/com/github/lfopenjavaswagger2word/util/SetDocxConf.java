@@ -7,7 +7,34 @@ package com.github.lfopenjavaswagger2word.util;
 
 public class SetDocxConf {
 
+    private String name = "皇夜";
+    private String url = "http://wwww.pingpingpang.cn";
+    private String email = "982338665@qq.com";
 
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
     /**
      * 默认的文件导出路径
      */

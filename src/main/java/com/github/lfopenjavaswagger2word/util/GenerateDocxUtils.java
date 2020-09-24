@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.lfopenjavaswagger2word.model.ModelAttr;
 import com.github.lfopenjavaswagger2word.model.Request;
 import com.github.lfopenjavaswagger2word.model.Response;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -705,9 +706,21 @@ public class GenerateDocxUtils {
         String version = (String) info.get("version");
         String title1 = (String) info.get("title");
         Map<String, String> map1 = (Map<String, String>) info.get("contact");
-        String name = map1.get("name");
-        String url1 = map1.get("url");
-        String email = map1.get("email");
+        SetDocxConf instance = SetDocxConf.getInstance();
+        String name = instance.getName();
+        String url1 = instance.getUrl();
+        String email = instance.getEmail();
+        if (map1 != null) {
+            if(map1.get("name")!=null){
+                name = map1.get("name");
+            }
+            if(map1.get("url")!=null){
+                url1 = map1.get("url");
+            }
+            if(map1.get("email")!=null){
+                email = map1.get("email");
+            }
+        }
         mapIndex.put(GetDocxConf.INDEX_TITLE, title1);
         mapIndex.put(GetDocxConf.INDEX_DESC, description1);
         mapIndex.put(GetDocxConf.INDEX_VERSIONSWAGGER, swagger);
