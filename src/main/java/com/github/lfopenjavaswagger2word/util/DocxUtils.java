@@ -65,11 +65,11 @@ public class DocxUtils {
     @Deprecated
     public static void generateDoc(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map) {
         try (
-                XWPFDocument doc = new XWPFDocument();
                 //组装文件名称
                 FileOutputStream out = new FileOutputStream(instance.getFilePath());
 
         ) {
+            XWPFDocument doc = new XWPFDocument();
             //添加预置标题
             addStyle(doc);
             //生成文档标题
@@ -86,9 +86,8 @@ public class DocxUtils {
     }
 
     public static void getXWPFDocument(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map, OutputStream out) {
-        try (
-                XWPFDocument doc = new XWPFDocument();
-        ) {
+        try {
+            XWPFDocument doc = new XWPFDocument();
             if (out == null) {
                 out = new FileOutputStream(instance.getFilePath().concat(".docx"));
             }
@@ -113,9 +112,8 @@ public class DocxUtils {
     }
 
     public static void getXWPFDocumentPDF(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map, OutputStream out, String watermarkText) {
-        try (
-                XWPFDocument doc = new XWPFDocument();
-        ) {
+        try{
+            XWPFDocument doc = new XWPFDocument();
             if (out == null) {
                 out = new FileOutputStream(instance.getFilePath().concat(".pdf"));
             }
