@@ -187,19 +187,4 @@
 ## 7 升级问题
     
     1.java.lang.NoClassDefFoundError: org/apache/poi/POIXMLTypeLoader
-        引入poi的3.15以上的版本。
-        <dependency>
-        <groupId>org.apache.poi</groupId>
-        <artifactId>poi</artifactId>
-        <version>3.15</version>
-        </dependency>
-        <dependency>
-        <groupId>org.apache.poi</groupId>
-        <artifactId>poi-ooxml-schemas</artifactId>
-        <version>3.15</version>
-        </dependency>
-        <dependency>
-        <groupId>org.apache.poi</groupId>
-        <artifactId>poi-ooxml</artifactId>
-        <version>3.15</version>
-        </dependency>
+        查看是否有jar包冲突覆盖问题，类加载时会有先后顺序
