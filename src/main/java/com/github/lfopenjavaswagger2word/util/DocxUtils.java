@@ -88,7 +88,7 @@ public class DocxUtils {
     public static void getXWPFDocument(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map, OutputStream out) {
         try {
             XWPFDocument doc = new XWPFDocument();
-            if (out == null) {
+            if (null == out ) {
                 out = new FileOutputStream(instance.getFilePath().concat(".docx"));
             }
             //添加预置标题
@@ -104,7 +104,9 @@ public class DocxUtils {
             e.printStackTrace();
         } finally {
             try {
-                out.close();
+                if(null !=out){
+                    out.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -114,7 +116,7 @@ public class DocxUtils {
     public static void getXWPFDocumentPDF(SetDocxConf instance, Map<String, List<Map<String, Object>>> mapp, Map<String, String> map, OutputStream out, String watermarkText) {
         try{
             XWPFDocument doc = new XWPFDocument();
-            if (out == null) {
+            if (null == out ) {
                 out = new FileOutputStream(instance.getFilePath().concat(".pdf"));
             }
             //添加预置标题
@@ -133,7 +135,9 @@ public class DocxUtils {
             e.printStackTrace();
         } finally {
             try {
-                out.close();
+                if(null !=out){
+                    out.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
