@@ -2,9 +2,9 @@ package com.github.lfopenjavaswagger2word.util;
 
 /**
  * @author : Mr huangye
- * @URL : CSDN 皇夜_
- * @createTime : 2020/7/18 19:39
- * @Description : word 转 pdf
+ *  CSDN 皇夜_
+ *  2020/7/18 19:39
+ *  word 转 pdf
  */
 public class WordToPDFUtils {
 

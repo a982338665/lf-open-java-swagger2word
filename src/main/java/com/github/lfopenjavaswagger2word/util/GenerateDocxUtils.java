@@ -433,7 +433,7 @@ public class GenerateDocxUtils {
      * 处理返回值
      *
      * @param responseObj
-     * @return
+     *
      */
     private static String processResponseParam(Map<String, Object> responseObj, Map<String, ModelAttr> definitinMap) throws JsonProcessingException {
         if (responseObj != null && responseObj.get("schema") != null) {
@@ -470,7 +470,7 @@ public class GenerateDocxUtils {
      *
      * @param responseObj
      * @param definitinMap
-     * @return
+     *
      */
     private static ModelAttr processResponseModelAttrs(Map<String, Object> responseObj, Map<String, ModelAttr> definitinMap) {
         Map<String, Object> schema = (Map<String, Object>) responseObj.get("schema");
@@ -501,7 +501,7 @@ public class GenerateDocxUtils {
      * 封装请求体
      *
      * @param list
-     * @return
+     *
      */
     private static String processRequestParam(List<Request> list) throws IOException {
         Map<String, Object> headerMap = new LinkedHashMap<>();
@@ -588,7 +588,7 @@ public class GenerateDocxUtils {
      *
      * @param type      类型
      * @param modelAttr 引用的类型
-     * @return
+     *
      */
     private static Object getValue(String type, ModelAttr modelAttr) {
         int pos;
@@ -637,7 +637,7 @@ public class GenerateDocxUtils {
      * 处理返回码列表
      *
      * @param responses 全部状态码返回对象
-     * @return
+     *
      */
     private static List<Response> processResponseCodeList(Map<String, Object> responses) {
         List<Response> responseList = new ArrayList<>();
@@ -737,7 +737,7 @@ public class GenerateDocxUtils {
      * 解析Definition
      *
      * @param map
-     * @return
+     *
      */
     private static Map<String, ModelAttr> parseDefinitions(Map<String, Object> map) {
         Map<String, Map<String, Object>> definitions = (Map<String, Map<String, Object>>) map.get("definitions");

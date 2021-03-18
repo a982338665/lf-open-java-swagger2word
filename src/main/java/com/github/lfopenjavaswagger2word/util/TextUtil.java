@@ -57,7 +57,7 @@ public class TextUtil {
      *
      * @param str
      * @param x
-     * @return
+     *
      */
     public static String addBlank(String str, int x) {
         StringBuilder stringBuilder = new StringBuilder("");
@@ -71,7 +71,7 @@ public class TextUtil {
     /**
      * 连接字符串
      * @param params
-     * @return
+     *
      */
     public static String concat(String... params) {
         StringBuilder stringBuilder= new StringBuilder();
