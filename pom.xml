@@ -7,7 +7,7 @@
 
 
     <!--注意限定版本一定为RELEASE,因为上传的对应仓库的存储类型为RELEASE-->
-    <version>1.0.1-RELEASE</version>
+    <version>1.0.2-RELEASE</version>
 
     <name>lf-open-java-swagger2word</name>
     <url>https://github.com/a982338665/lf-open-java-swagger2word.git</url>
@@ -68,11 +68,11 @@
             <artifactId>poi-examples</artifactId>
             <version>3.14</version>
         </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>1.9.2</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.aspectj</groupId>-->
+<!--            <artifactId>aspectjweaver</artifactId>-->
+<!--            <version>1.9.2</version>-->
+<!--        </dependency>-->
         <!--        <dependency>-->
         <!--            <groupId>com.aspose.words</groupId>-->
         <!--            <artifactId>aspose-words</artifactId>-->
@@ -129,13 +129,13 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
-                    <!--                    <compilerArgs>-->
+                                        <compilerArgs>
                     <!--                        <arg>-verbose</arg>-->
-                    <!--                        <arg>-Xlint:unchecked</arg>-->
+                                            <arg>-Xlint:unchecked</arg>
                     <!--                        <arg>-Xlint:deprecation</arg>-->
                     <!--                        <arg>-extdirs</arg>-->
                     <!--                        <arg>${project.basedir}/lib</arg>-->
-                    <!--                    </compilerArgs>-->
+                                        </compilerArgs>
                 </configuration>
             </plugin>
             <!-- Source -->
